@@ -7,6 +7,13 @@
 npm install cardinity-nodejs
 ```
 
+## Test
+
+```sh
+node test.js
+```
+
+
 ## Usage
 
 # Changelog
