@@ -1,0 +1,16 @@
+{
+  "name": "cardinity-nodejs",
+  "version": "1.0.0",
+  "description": "Cardinity NodeJS Library",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@bitbucket.org/KiprasTar/cardinity-nodejs.git"
+  },
+  "author": "KiprasT",
+  "license": "MIT",
+  "homepage": "https://bitbucket.org/KiprasTar/cardinity-nodejs#readme"
+}
