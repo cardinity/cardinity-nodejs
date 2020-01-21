@@ -12,5 +12,12 @@
   },
   "author": "KiprasT",
   "license": "MIT",
-  "homepage": "https://bitbucket.org/KiprasTar/cardinity-nodejs#readme"
+  "homepage": "https://bitbucket.org/KiprasTar/cardinity-nodejs#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "ejs": "^3.0.1",
+    "express": "^4.17.1",
+    "request": "^2.88.0",
+    "request-promise": "^4.2.5"
+  }
 }

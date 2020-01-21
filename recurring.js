@@ -7,7 +7,7 @@ function Payment(vars) {
     this.description = vars.description
     this.order_id = vars.order_id
     this.country = vars.country
-    this.payment_method = 'card'
+    this.payment_method = 'recurring'
     this.payment_instrument = vars.payment_instrument
 }
 

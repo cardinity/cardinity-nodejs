@@ -5,8 +5,8 @@ function Client(consumerKey, consumerSecret) {
     this.consumerSecret = consumerSecret
 }
 
-method.call = function(payment) {
-    const request = require('request')
+method.call = async function(payment, method = 'POST', trailing = '') {
+    const rp = require('request-promise')
     const OAuth = require('oauth-1.0a')
     const crypto = require('crypto')
     // Initialize
@@ -25,20 +25,22 @@ method.call = function(payment) {
         },
     })
     const request_data = {
-        url: 'https://api.cardinity.com/v1/payments',
-        method: 'POST',
-    }    
-    request(
+        url: 'https://api.cardinity.com/v1/payments' + trailing,
+        method: method || 'POST',
+    }
+    return await rp(
         {
             url: request_data.url,
             method: request_data.method,
             headers: oauth.mergeObject({'Accept': 'application/json', 'Content-Type': 'application/json'}, oauth.toHeader(oauth.authorize(request_data))),
-            body: JSON.stringify(payment)
-        },
-        function(error, response, body) {
-            console.log(body)
+            body: JSON.stringify(payment),
         }
-    )
+    ).then(function (body){
+        return JSON.parse(body)
+    }).catch(function (error){
+        return error
+    })
 }
+
 
 module.exports = Client;
