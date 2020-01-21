@@ -2,6 +2,8 @@ var Client = require('./client.js')
 var Payment = require('./payment.js')
 var Finalize = require('./finalize.js')
 var Recurring = require('./recurring.js')
+var Refund = require('./refund.js')
+var GetPayments = require('./getpayments.js')
 
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -12,39 +14,44 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.set('view engine', 'ejs')
 
 app.get('/', function (req, res) {
-  res.render('index');
+     res.render('index');
 })
 app.post('/pay', function (req, res) {
-  var purchase = new Payment({
-      "amount": parseFloat(req.body.price).toFixed(2),
-      "currency": "EUR",
-      "settle": true,
-      "description": "Payment from NodeJS",
-      "order_id": "NodeJS1",
-      "country": "LT",
-      "payment_instrument": {
-        "pan": req.body.cardnumber,
-        "exp_year": req.body.expyear,
-        "exp_month": req.body.expmonth,
-        "cvc": req.body.cvv,
-        "holder": String(req.cardname),
-      },
-  })
-  var client = new Client('test_3a4393c3da1a4e316ee66c0cc61c71', 'ffe1372c074185b19c309964812bb8f3f2256ba514aea8a318')
-  client.call(purchase).then(function(response){
-    if(response.status == 'pending'){
-        res.render('pay', {pareq: response.authorization_information.data, url: response.authorization_information.url, callback_url: 'http://localhost:3000/callback', md: response.id});
-    }
-  });
+    var purchase = new Payment({
+        "amount": parseFloat(req.body.price).toFixed(2),
+        "currency": "EUR",
+        "settle": true,
+        "description": "Payment from NodeJS",
+        "order_id": "NodeJS1",
+        "country": "LT",
+        "payment_instrument": {
+            "pan": req.body.cardnumber,
+            "exp_year": req.body.expyear,
+            "exp_month": req.body.expmonth,
+            "cvc": req.body.cvv,
+            "holder": String(req.cardname),
+        },
+    })
+    var client = new Client('test_3a4393c3da1a4e316ee66c0cc61c71', 'ffe1372c074185b19c309964812bb8f3f2256ba514aea8a318')
+    client.call(purchase).then(function(response){
+        if(response.status == 'pending'){
+            res.render('pay', {pareq: response.authorization_information.data, url: response.authorization_information.url, callback_url: 'http://localhost:3000/callback', md: response.id});
+        }
+    }).catch(function (error){
+        console.log(error)
+    });
 })
 
 app.post('/callback', function(req, res){
     var client = new Client('test_3a4393c3da1a4e316ee66c0cc61c71', 'ffe1372c074185b19c309964812bb8f3f2256ba514aea8a318')
     var patch = new Finalize({
-        "authorize_data": req.body.PaRes
+        "authorize_data": req.body.PaRes,
+        "trailing": '/' + req.body.MD,
     })
-    client.call(patch, 'PATCH', '/' + req.body.MD).then(function(response){
+    client.call(patch).then(function(response){
         res.render('done');
+    }).catch(function (error){
+        console.log(error)
     });
 })
 
@@ -58,12 +65,42 @@ app.get('/recurring', function(req, res){
         "order_id": "NodeJS1",
         "country": "LT",
         "payment_instrument": {
-            "payment_id": "",
+            "payment_id": "69ea333c-9b51-4553-b3e8-bc64223664cc",
         },
     })
     client.call(recurring).then(function(response){
         console.log(response)
         res.render('done')
+    }).catch(function (error){
+        console.log(error)
+    });
+})
+
+app.get('/refund', function(req, res){
+    var client = new Client('test_3a4393c3da1a4e316ee66c0cc61c71', 'ffe1372c074185b19c309964812bb8f3f2256ba514aea8a318')
+    var refund = new Refund({
+        "amount": "2.00",
+        "description": "NodeJS test refund",
+        "id": '69ea333c-9b51-4553-b3e8-bc64223664cc',
+    })
+    client.call(refund).then(function(response){
+        console.log(response)
+        res.render('done')
+    }).catch(function (error){
+        console.log(error)
+    });
+})
+
+app.get('/all-payments', function(req, res){
+    var client = new Client('test_3a4393c3da1a4e316ee66c0cc61c71', 'ffe1372c074185b19c309964812bb8f3f2256ba514aea8a318')
+    var payments = new GetPayments({
+        "limit": req.query.limit,
+    });
+    client.call(payments).then(function(response){
+        console.log(response)
+        res.render('payments', {payments: JSON.stringify(response)})
+    }).catch(function (error){
+        console.log(error)
     });
 })
 

@@ -1,6 +1,7 @@
 var method = Payment.prototype;
 
 function Payment(vars) {
+    this.method = 'POST'
     this.amount = vars.amount
     this.currency = vars.currency
     this.settle = vars.settle
