@@ -3,7 +3,7 @@ var Payment = require('./payment.js')
 var Finalize = require('./finalize.js')
 var Recurring = require('./recurring.js')
 var Refund = require('./refund.js')
-var GetPayments = require('./getpayments.js')
+var GetPayments = require('./getpayment.js')
 
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -93,9 +93,20 @@ app.get('/refund', function(req, res){
 
 app.get('/all-payments', function(req, res){
     var client = new Client('test_3a4393c3da1a4e316ee66c0cc61c71', 'ffe1372c074185b19c309964812bb8f3f2256ba514aea8a318')
-    var payments = new GetPayments({
-        "limit": req.query.limit,
+    var payments = new GetPayments(parseInt(req.query.limit));
+    client.call(payments).then(function(response){
+        console.log(response)
+        res.render('payments', {payments: JSON.stringify(response)})
+    }).catch(function (error){
+        console.log(error)
     });
+})
+
+app.get('/payment', function(req, res){
+    var client = new Client('test_3a4393c3da1a4e316ee66c0cc61c71', 'ffe1372c074185b19c309964812bb8f3f2256ba514aea8a318')
+    var payments = new GetPayments({
+        "id": req.query.id,
+    })
     client.call(payments).then(function(response){
         console.log(response)
         res.render('payments', {payments: JSON.stringify(response)})
