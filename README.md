@@ -20,25 +20,27 @@ node test.js
 var Client = require('./client.js')
 var Payment = require('./payment.js')
 
-...
-
 var purchase = new Payment({
-        "amount": parseFloat(req.body.price).toFixed(2),
+        "amount": "50.00",
         "currency": "EUR",
         "settle": false,
         "description": "Payment from NodeJS",
         "order_id": "NodeJS1",
         "country": "LT",
         "payment_instrument": {
-            "pan": req.body.cardnumber,
-            "exp_year": req.body.expyear,
-            "exp_month": req.body.expmonth,
-            "cvc": req.body.cvv,
-            "holder": String(req.cardname),
+            "pan": "5555555555554444",
+            "exp_year": "2222",
+            "exp_month": "2",
+            "cvc": "222",
+            "holder": "John Doe",
         },
     })
-    var client = new Client('test_3a4393c3da1a4e316ee66c0cc61c71', 'ffe1372c074185b19c309964812bb8f3f2256ba514aea8a318')
-    client.call(purchase)
+    var client = new Client('consumerKey', 'consumerSecret')
+    client.call(purchase).then(function(response){
+        // Deal with response
+    }).catch(function(error){
+        // Deal with error
+    });
 ```
 
 # Changelog
