@@ -23,7 +23,7 @@ var Payment = require('./payment.js')
 var purchase = new Payment({
         "amount": "50.00",
         "currency": "EUR",
-        "settle": false,
+        "settle": true,
         "description": "Payment from NodeJS",
         "order_id": "NodeJS1",
         "country": "LT",

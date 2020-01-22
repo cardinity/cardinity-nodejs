@@ -1,6 +1,6 @@
 {
   "name": "cardinity-nodejs",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Cardinity NodeJS Library",
   "main": "index.js",
   "scripts": {
@@ -14,10 +14,6 @@
   "license": "MIT",
   "homepage": "https://bitbucket.org/KiprasTar/cardinity-nodejs#readme",
   "dependencies": {
-    "body-parser": "^1.19.0",
-    "ejs": "^3.0.1",
-    "express": "^4.17.1",
-    "request": "^2.88.0",
     "request-promise": "^4.2.5"
   }
 }
