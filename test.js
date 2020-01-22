@@ -4,6 +4,11 @@ var Finalize = require('./finalize.js')
 var Recurring = require('./recurring.js')
 var Refund = require('./refund.js')
 var GetPayments = require('./getpayment.js')
+var GetRefund = require('./getrefund')
+var Settlement = require('./settlement.js')
+var GetSettlement = require('./getsettlement.js')
+var Voids = require('./voids.js')
+var GetVoids = require('./getvoids.js')
 
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -20,7 +25,7 @@ app.post('/pay', function (req, res) {
     var purchase = new Payment({
         "amount": parseFloat(req.body.price).toFixed(2),
         "currency": "EUR",
-        "settle": true,
+        "settle": false,
         "description": "Payment from NodeJS",
         "order_id": "NodeJS1",
         "country": "LT",
@@ -108,6 +113,88 @@ app.get('/payment', function(req, res){
         "id": req.query.id,
     })
     client.call(payments).then(function(response){
+        console.log(response)
+        res.render('payments', {payments: JSON.stringify(response)})
+    }).catch(function (error){
+        console.log(error)
+    });
+})
+
+app.get('/all-refunds', function(req, res){
+    var client = new Client('test_3a4393c3da1a4e316ee66c0cc61c71', 'ffe1372c074185b19c309964812bb8f3f2256ba514aea8a318')
+    var refunds = new GetRefund({
+        "id": "69ea333c-9b51-4553-b3e8-bc64223664cc"
+    })
+    client.call(refunds).then(function(response){
+        console.log(response)
+        res.render('payments', {payments: JSON.stringify(response)})
+    }).catch(function (error){
+        console.log(error)
+    });
+})
+
+app.get('/get-refund', function(req, res){
+    var client = new Client('test_3a4393c3da1a4e316ee66c0cc61c71', 'ffe1372c074185b19c309964812bb8f3f2256ba514aea8a318')
+    var refunds = new GetRefund({
+        "id": "69ea333c-9b51-4553-b3e8-bc64223664cc",
+        "refund_id": "69ea333c-9b51-4553-b3e8-bc64223664cc"
+    })
+    client.call(refunds).then(function(response){
+        console.log(response)
+        res.render('payments', {payments: JSON.stringify(response)})
+    }).catch(function (error){
+        console.log(error)
+    });
+})
+
+app.get('/settle', function(req, res){
+    var client = new Client('test_3a4393c3da1a4e316ee66c0cc61c71', 'ffe1372c074185b19c309964812bb8f3f2256ba514aea8a318')
+    var settle = new Settlement({
+        "id": "220f5b46-dea6-4925-a578-b944cbb6298b",
+        "amount": "2.00",
+    })
+    client.call(settle).then(function(response){
+        console.log(response)
+        res.render('payments', {payments: JSON.stringify(response)})
+    }).catch(function (error){
+        console.log(error)
+    });
+})
+
+app.get('/get-settlement', function(req, res){
+    var client = new Client('test_3a4393c3da1a4e316ee66c0cc61c71', 'ffe1372c074185b19c309964812bb8f3f2256ba514aea8a318')
+    var settle = new GetSettlement({
+        "id": "220f5b46-dea6-4925-a578-b944cbb6298b",
+        "settlement_id": "3bbe5f7a-b7f8-47f4-86ef-ec9e59d44d77"
+    })
+    client.call(settle).then(function(response){
+        console.log(response)
+        res.render('payments', {payments: JSON.stringify(response)})
+    }).catch(function (error){
+        console.log(error)
+    });
+})
+
+app.get('/voids', function(req, res){
+    var client = new Client('test_3a4393c3da1a4e316ee66c0cc61c71', 'ffe1372c074185b19c309964812bb8f3f2256ba514aea8a318')
+    var voids = new Voids({
+        "id": "1f77737e-0044-44f8-bfd1-2a4aa79431ee",
+    })
+    client.call(voids).then(function(response){
+        console.log(response)
+        res.render('payments', {payments: JSON.stringify(response)})
+    }).catch(function (error){
+        console.log(error)
+    });
+})
+
+app.get('/get-voids', function(req, res){
+    var client = new Client('test_3a4393c3da1a4e316ee66c0cc61c71', 'ffe1372c074185b19c309964812bb8f3f2256ba514aea8a318')
+    var voids = new GetVoids({
+        "id": "1f77737e-0044-44f8-bfd1-2a4aa79431ee",
+        // "void_id": "b884831b-de60-4d32-b690-af88d746bad9"
+    })
+    client.call(voids).then(function(response){
         console.log(response)
         res.render('payments', {payments: JSON.stringify(response)})
     }).catch(function (error){
