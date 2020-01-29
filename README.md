@@ -8,18 +8,11 @@ Library includes all the functionality provided by API. Library was designed to 
 npm install cardinity-nodejs
 ```
 
-## Test
-
-```sh
-node test.js
-```
-
-
 ## Usage
 
 #### Create new payment
 
-```js
+```javascript
 var Client = require('cardinity-nodejs/client.js')
 var Payment = require('cardinity-nodejs/payment.js')
 
@@ -38,16 +31,16 @@ var purchase = new Payment({
             "holder": "John Doe",
         },
     })
-    var client = new Client('consumerKey', 'consumerSecret')
-    client.call(purchase).then(function(response){
-        // Deal with response
-    }).catch(function(error){
-        // Deal with error
-    });
+var client = new Client('consumerKey', 'consumerSecret')
+client.call(purchase).then(function(response){
+    // Deal with response
+}).catch(function(error){
+    // Deal with error
+});
 ```
 
 #### Get existing payment
-```js
+```javascript
     var client = new Client('consumerKey', 'consumerSecret')
     var payments = new GetPayments({
         "id": "{UUID}",
