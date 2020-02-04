@@ -1,12 +1,11 @@
 var method = GetSettlement.prototype;
 
 function GetSettlement(vars) {
+    this.method = 'GET';
     if(vars.settlement_id){
-        this.method = 'GET'
-        this.trailing = '/' + vars.id + '/settlements/' + vars.settlement_id
+        this.trailing = '/' + vars.id + '/settlements/' + vars.settlement_id;
     } else {
-        this.method = 'GET'
-        this.trailing = '/' + vars.id + '/settlements/'
+        this.trailing = '/' + vars.id + '/settlements/';
     }
 }
 

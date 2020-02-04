@@ -1,4 +1,6 @@
+
 # Cardinity NodeJS SDK
+
 This is official NodeJS client library for [Cardinity's](https://developers.cardinity.com/api/v1/) API.  
 Library includes all the functionality provided by API. Library was designed to be flexible and self-explanatory for developers to implement.
 
@@ -10,7 +12,7 @@ npm install cardinity-nodejs
 
 ## Usage
 
-#### Create new payment
+### Create new payment
 
 ```javascript
 var Client = require('cardinity-nodejs/client.js')
@@ -39,7 +41,8 @@ client.call(purchase).then(function(response){
 });
 ```
 
-#### Get existing payment
+### Get existing payment
+
 ```javascript
     var client = new Client('consumerKey', 'consumerSecret')
     var payments = new GetPayments({
@@ -53,9 +56,10 @@ client.call(purchase).then(function(response){
 ```
 
 ## API documentation
+
 [https://developers.cardinity.com/api/v1/](https://developers.cardinity.com/api/v1/)
 
-# Changelog
+### Changelog
 
 - 0.1.5 Updated README
 - 0.1.0 All API v1 methods are implemented

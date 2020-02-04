@@ -1,12 +1,11 @@
 var method = GetPayment.prototype;
 
 function GetPayment(vars) {
+    this.method = 'GET';
     if(Number.isInteger(vars)){
-        this.method = 'GET'
-        this.trailing = '?limit=' + vars 
+        this.trailing = '?limit=' + vars;
     } else {
-        this.method = 'GET'
-        this.trailing = '/' + vars.id
+        this.trailing = '/' + vars.id;
     }
 }
 
