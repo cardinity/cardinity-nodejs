@@ -80,9 +80,9 @@ var recurring = new Recurring({
     },
 })
 client.call(recurring).then(function(response){
-    console.log(response)
+    // Deal with response
 }).catch(function (error){
-    console.log(error)
+    // Deal with error
 });
 ```
 
@@ -98,9 +98,9 @@ var patch = new Finalize({
     "id": 'PENDING_PAYMENT_ID',
 })
 client.call(patch).then(function(response){
-    res.render('done');
+    // Deal with response
 }).catch(function (error){
-    console.log(error)
+    // Deal with error
 });
 ```
 
@@ -129,9 +129,9 @@ var GetPayment = require('cardinity-nodejs/getpayment.js')
 var client = new Client('YOUR_CONSUMER_KEY', 'YOUR_CONSUMER_SECRET')
 var payments = new GetPayment(NUMBER_OF_PAYMENTS_TO_GET)
 client.call(payments).then(function(response){
-    console.log(response)
+    // Deal with response
 }).catch(function (error){
-    console.log(error)
+    // Deal with error
 });
 ```
 
@@ -150,9 +150,9 @@ var refund = new Refund({
     "id": 'PAYMENT_UUID',
 })
 client.call(refund).then(function(response){
-    console.log(response)
+    // Deal with response
 }).catch(function (error){
-    console.log(error)
+    // Deal with error
 });
 ```
 
@@ -168,9 +168,9 @@ var refunds = new GetRefund({
     "refund_id": "REFUND_UUID"
 })
 client.call(refunds).then(function(response){
-    console.log(response)
+    // Deal with response
 }).catch(function (error){
-    console.log(error)
+    // Deal with error
 });
 ```
 
@@ -185,9 +185,9 @@ var refund = new GetRefund({
     "id": "PAYMENT_UUID"
 })
 client.call(refund).then(function(response){
-    console.log(response)
+    // Deal with response
 }).catch(function (error){
-    console.log(error)
+    // Deal with error
 });
 ```
 
@@ -206,9 +206,9 @@ var settle = new Settlement({
     "description": "optional description"
 })
 client.call(settle).then(function(response){
-    console.log(response)
+    // Deal with response
 }).catch(function (error){
-    console.log(error)
+    // Deal with error
 });
 ```
 
@@ -224,9 +224,9 @@ var settle = new GetSettlement({
     "settlement_id": "SETTLEMENT_UUID"
 })
 client.call(settle).then(function(response){
-    console.log(response)
+    // Deal with response
 }).catch(function (error){
-    console.log(error)
+    // Deal with error
 });
 ```
 
@@ -241,9 +241,9 @@ var settle = new GetSettlement({
     "id": "PAYMENT_UUID"
 })
 client.call(settle).then(function(response){
-    console.log(response)
+    // Deal with response
 }).catch(function (error){
-    console.log(error)
+    // Deal with error
 });
 ```
 
@@ -260,9 +260,9 @@ var voids = new Voids({
     "id": "PAYMENT_UUID",
 })
 client.call(voids).then(function(response){
-    console.log(response)
+    // Deal with response
 }).catch(function (error){
-    console.log(error)
+    // Deal with error
 });
 ```
 
@@ -278,9 +278,9 @@ var voids = new GetVoids({
     "void_id": "VOID_UUID"
 })
 client.call(voids).then(function(response){
-    console.log(response)
+    // Deal with response
 }).catch(function (error){
-    console.log(error)
+    // Deal with error
 });
 ```
 
@@ -295,9 +295,9 @@ var voids = new GetVoids({
     "id": "PAYMENT_UUID"
 })
 client.call(voids).then(function(response){
-    console.log(response)
+    // Deal with response
 }).catch(function (error){
-    console.log(error)
+    // Deal with error
 });
 ```
 
