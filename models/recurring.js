@@ -1,6 +1,6 @@
-var method = Payment.prototype;
+var method = Recurring.prototype;
 
-function Payment(vars) {
+function Recurring(vars) {
     this.method = 'POST';
     this.amount = vars.amount;
     this.currency = vars.currency;
@@ -12,4 +12,4 @@ function Payment(vars) {
     this.payment_instrument = vars.payment_instrument;
 }
 
-module.exports = Payment;
+module.exports = Recurring;

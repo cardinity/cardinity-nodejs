@@ -6,7 +6,7 @@ function Client(consumerKey, consumerSecret) {
 }
 
 method.call = async function(body) {
-    const rp = require('request-promise');
+    const requestPromise = require('request-promise');
     const OAuth = require('oauth-1.0a');
     const crypto = require('crypto');
     // Initialize
@@ -28,7 +28,7 @@ method.call = async function(body) {
         url: 'https://api.cardinity.com/v1/payments' + (body.trailing || ''),
         method: body.method,
     }
-    return await rp(
+    return await requestPromise(
         {
             url: request_data.url,
             method: request_data.method,
