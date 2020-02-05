@@ -95,7 +95,7 @@ var Finalize = require('cardinity-nodejs/finalize.js')
 var client = new Client('YOUR_CONSUMER_KEY', 'YOUR_CONSUMER_SECRET')
 var patch = new Finalize({
     "authorize_data": 'PARES_RECEIVED_FROM_ACS',
-    "id": 'PENDING_PAYMENT_ID',
+    "id": 'PENDING_PAYMENT_UUID',
 })
 client.call(patch).then(function(response){
     // Deal with response
