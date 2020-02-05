@@ -281,8 +281,8 @@ client.call(voids).then(function(response){
 #### Get existing void
 
 ```javascript
-var Client = require('./client.js')
-var GetVoids = require('./getvoids.js')
+var Client = require('cardinity-nodejs/client.js')
+var GetVoids = require('cardinity-nodejs/getvoids.js')
 
 var voids = new GetVoids({
     "id": "PAYMENT_UUID",
@@ -300,8 +300,8 @@ client.call(voids).then(function(response){
 #### Get all voids
 
 ```javascript
-var Client = require('./client.js')
-var GetVoids = require('./getvoids.js')
+var Client = require('cardinity-nodejs/client.js')
+var GetVoids = require('cardinity-nodejs/getvoids.js')
 
 var voids = new GetVoids({
     "id": "PAYMENT_UUID"
@@ -314,9 +314,3 @@ client.call(voids).then(function(response){
     // Deal with error
 });
 ```
-
-### Changelog
-
-- 0.1.5 Updated README
-- 0.1.0 All API v1 methods are implemented
-- 0.0.1 Basic payment function
