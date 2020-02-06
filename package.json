@@ -1,6 +1,6 @@
 {
   "name": "cardinity-nodejs",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Cardinity NodeJS Library",
   "main": "cardinity.js",
   "scripts": {
@@ -8,11 +8,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@bitbucket.org/KiprasTar/cardinity-nodejs.git"
+    "url": "git+ssh://git@github.com:cardinity/cardinity-nodejs.git"
   },
   "author": "KiprasT",
   "license": "MIT",
-  "homepage": "https://bitbucket.org/KiprasTar/cardinity-nodejs#readme",
+  "homepage": "https://github.com/cardinity/cardinity-nodejs/blob/master/README.md",
   "dependencies": {
     "request": "^2.88.0",
     "request-promise": "^4.2.5",
