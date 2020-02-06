@@ -1,8 +1,8 @@
 
-# Cardinity NodeJS SDK
+# Cardinity NodeJS Wrapper
 
-This is official NodeJS client library for [Cardinity's](https://developers.cardinity.com/api/v1/) API.  
-Library includes all the functionality provided by API. Library was designed to be flexible and self-explanatory for developers to implement.
+This is an official NodeJS client library for [Cardinity's](https://developers.cardinity.com/api/v1/) API.  
+Library includes all the functionality provided by the API. Library was designed to be flexible and self-explanatory for developers to implement.
 
 ## Installation
 
