@@ -25,8 +25,9 @@ npm install cardinity-nodejs
 * You just have to initialize the client object.
 */
 
-var Client = require('cardinity-nodejs/client.js');
-var client = new Client('YOUR_CONSUMER_KEY','YOUR_CONSUMER_SECRET');
+const Cardinity = require('cardinity-nodejs')
+const Client = Cardinity.client()
+const client = new Client('YOUR_CONSUMER_KEY','YOUR_CONSUMER_SECRET');
 ```
 
 ### Payments
@@ -34,10 +35,11 @@ var client = new Client('YOUR_CONSUMER_KEY','YOUR_CONSUMER_SECRET');
 #### Create new payment
 
 ```javascript
-var Client = require('cardinity-nodejs/client.js')
-var Payment = require('cardinity-nodejs/payment.js')
+const Cardinity = require('cardinity-nodejs')
+const Client = Cardinity.client()
+const Payment = Cardinity.payment()
 
-var purchase = new Payment({
+const purchase = new Payment({
         "amount": "50.00",
         "currency": "EUR",
         "settle": true,
@@ -53,7 +55,7 @@ var purchase = new Payment({
         },
     })
 
-var client = new Client('YOUR_CONSUMER_KEY', 'YOUR_CONSUMER_SECRET')
+const client = new Client('YOUR_CONSUMER_KEY', 'YOUR_CONSUMER_SECRET')
 client.call(purchase).then(function(response){
     // Deal with response
 }).catch(function(error){
@@ -64,10 +66,11 @@ client.call(purchase).then(function(response){
 #### Create new recurring payment
 
 ```javascript
-var Client = require('cardinity-nodejs/client.js')
-var Recurring = require('cardinity-nodejs/recurring.js')
+const Cardinity = require('cardinity-nodejs')
+const Client = Cardinity.client()
+const Recurring = Cardinity.recurring()
 
-var recurring = new Recurring({
+const recurring = new Recurring({
     "amount": "50.00",
     "currency": "EUR",
     "settle": false,
@@ -79,7 +82,7 @@ var recurring = new Recurring({
     },
 })
 
-var client = new Client('YOUR_CONSUMER_KEY', 'YOUR_CONSUMER_SECRET')
+const client = new Client('YOUR_CONSUMER_KEY', 'YOUR_CONSUMER_SECRET')
 client.call(recurring).then(function(response){
     // Deal with response
 }).catch(function (error){
@@ -90,15 +93,16 @@ client.call(recurring).then(function(response){
 #### Finalize pending payment
 
 ```javascript
-var Client = require('cardinity-nodejs/client.js')
-var Finalize = require('cardinity-nodejs/finalize.js')
+const Cardinity = require('cardinity-nodejs')
+const Client = Cardinity.client()
+const Finalize = Cardinity.finalize()
 
-var patch = new Finalize({
+const patch = new Finalize({
     "authorize_data": 'PARES_RECEIVED_FROM_ACS',
     "id": 'PENDING_PAYMENT_UUID',
 })
 
-var client = new Client('YOUR_CONSUMER_KEY', 'YOUR_CONSUMER_SECRET')
+const client = new Client('YOUR_CONSUMER_KEY', 'YOUR_CONSUMER_SECRET')
 client.call(patch).then(function(response){
     // Deal with response
 }).catch(function (error){
@@ -109,30 +113,32 @@ client.call(patch).then(function(response){
 #### Get existing payment
 
 ```javascript
-    var Client = require('cardinity-nodejs/client.js')
-    var GetPayment = require('cardinity-nodejs/getpayment.js')
+const Cardinity = require('cardinity-nodejs')
+const Client = Cardinity.client()
+const GetPayment = Cardinity.getPayment()
 
-    var payments = new GetPayment({
-        "id": "PAYMENT_UUID",
-    })
+const payments = new GetPayment({
+    "id": "PAYMENT_UUID",
+})
 
-    var client = new Client('YOUR_CONSUMER_KEY', 'YOUR_CONSUMER_SECRET')
-    client.call(payments).then(function(response){
-        // Deal with response
-    }).catch(function (error){
-        // Deal with error
-    });
+const client = new Client('YOUR_CONSUMER_KEY', 'YOUR_CONSUMER_SECRET')
+client.call(payments).then(function(response){
+    // Deal with response
+}).catch(function (error){
+    // Deal with error
+});
 ```
 
 #### Get all payments
 
 ```javascript
-var Client = require('cardinity-nodejs/client.js')
-var GetPayment = require('cardinity-nodejs/getpayment.js')
+const Cardinity = require('cardinity-nodejs')
+const Client = Cardinity.client()
+const GetPayment = Cardinity.getPayment()
 
-var payments = new GetPayment(NUMBER_OF_PAYMENTS_TO_GET)
+const payments = new GetPayment(NUMBER_OF_PAYMENTS_TO_GET)
 
-var client = new Client('YOUR_CONSUMER_KEY', 'YOUR_CONSUMER_SECRET')
+const client = new Client('YOUR_CONSUMER_KEY', 'YOUR_CONSUMER_SECRET')
 client.call(payments).then(function(response){
     // Deal with response
 }).catch(function (error){
@@ -145,16 +151,17 @@ client.call(payments).then(function(response){
 #### Create new refund
 
 ```javascript
-var Client = require('cardinity-nodejs/client.js')
-var Refund = require('cardinity-nodejs/refund.js')
+const Cardinity = require('cardinity-nodejs')
+const Client = Cardinity.client()
+const Refund = Cardinity.refund()
 
-var refund = new Refund({
+const refund = new Refund({
     "amount": "50.00",
     "description": "some optional description",
     "id": 'PAYMENT_UUID',
 })
 
-var client = new Client('YOUR_CONSUMER_KEY', 'YOUR_CONSUMER_SECRET')
+const client = new Client('YOUR_CONSUMER_KEY', 'YOUR_CONSUMER_SECRET')
 client.call(refund).then(function(response){
     // Deal with response
 }).catch(function (error){
@@ -165,15 +172,16 @@ client.call(refund).then(function(response){
 #### Get existing refund
 
 ```javascript
-var Client = require('cardinity-nodejs/client.js')
-var GetRefund = require('cardinity-nodejs/getrefund')
+const Cardinity = require('cardinity-nodejs')
+const Client = Cardinity.client()
+const GetRefund = Cardinity.getRefund()
 
-var refunds = new GetRefund({
+const refunds = new GetRefund({
     "id": "PAYMENT_UUID",
     "refund_id": "REFUND_UUID"
 })
 
-var client = new Client('YOUR_CONSUMER_KEY', 'YOUR_CONSUMER_SECRET')
+const client = new Client('YOUR_CONSUMER_KEY', 'YOUR_CONSUMER_SECRET')
 client.call(refunds).then(function(response){
     // Deal with response
 }).catch(function (error){
@@ -184,14 +192,15 @@ client.call(refunds).then(function(response){
 #### Get all refunds
 
 ```javascript
-var Client = require('cardinity-nodejs/client.js')
-var GetRefund = require('cardinity-nodejs/getrefund')
+const Cardinity = require('cardinity-nodejs')
+const Client = Cardinity.client()
+const GetRefund = Cardinity.getRefund()
 
-var refund = new GetRefund({
+const refund = new GetRefund({
     "id": "PAYMENT_UUID"
 })
 
-var client = new Client('YOUR_CONSUMER_KEY', 'YOUR_CONSUMER_SECRET')
+const client = new Client('YOUR_CONSUMER_KEY', 'YOUR_CONSUMER_SECRET')
 client.call(refund).then(function(response){
     // Deal with response
 }).catch(function (error){
@@ -204,16 +213,17 @@ client.call(refund).then(function(response){
 #### Create new settlement
 
 ```javascript
-var Client = require('cardinity-nodejs/client.js')
-var Settlement = require('cardinity-nodejs/settlement.js')
+const Cardinity = require('cardinity-nodejs')
+const Client = Cardinity.client()
+const Settlement = Cardinity.settlement()
 
-var settle = new Settlement({
+const settle = new Settlement({
     "id": "PAYMENT_UUID",
     "amount": "50.00",
     "description": "optional description"
 })
 
-var client = new Client('YOUR_CONSUMER_KEY', 'YOUR_CONSUMER_SECRET')
+const client = new Client('YOUR_CONSUMER_KEY', 'YOUR_CONSUMER_SECRET')
 client.call(settle).then(function(response){
     // Deal with response
 }).catch(function (error){
@@ -224,15 +234,16 @@ client.call(settle).then(function(response){
 #### Get existing settlement
 
 ```javascript
-var Client = require('cardinity-nodejs/client.js')
-var GetSettlement = require('cardinity-nodejs/getsettlement.js')
+const Cardinity = require('cardinity-nodejs')
+const Client = Cardinity.client()
+const GetSettlement = Cardinity.getSettlement()
 
-var settle = new GetSettlement({
+const settle = new GetSettlement({
     "id": "PAYMENT_UUID",
     "settlement_id": "SETTLEMENT_UUID"
 })
 
-var client = new Client('YOUR_CONSUMER_KEY', 'YOUR_CONSUMER_SECRET')
+const client = new Client('YOUR_CONSUMER_KEY', 'YOUR_CONSUMER_SECRET')
 client.call(settle).then(function(response){
     // Deal with response
 }).catch(function (error){
@@ -243,14 +254,15 @@ client.call(settle).then(function(response){
 #### Get all settlements
 
 ```javascript
-var Client = require('cardinity-nodejs/client.js')
-var GetSettlement = require('cardinity-nodejs/getsettlement.js')
+const Cardinity = require('cardinity-nodejs')
+const Client = Cardinity.client()
+const GetSettlement = Cardinity.getSettlement()
 
-var settle = new GetSettlement({
+const settle = new GetSettlement({
     "id": "PAYMENT_UUID"
 })
 
-var client = new Client('YOUR_CONSUMER_KEY', 'YOUR_CONSUMER_SECRET')
+const client = new Client('YOUR_CONSUMER_KEY', 'YOUR_CONSUMER_SECRET')
 client.call(settle).then(function(response){
     // Deal with response
 }).catch(function (error){
@@ -263,14 +275,15 @@ client.call(settle).then(function(response){
 #### Create new void
 
 ```javascript
-var Client = require('cardinity-nodejs/client.js')
-var Voids = require('cardinity-nodejs/voids.js')
+const Cardinity = require('cardinity-nodejs')
+const Client = Cardinity.client()
+const Voids = Cardinity.voids()
 
-var voids = new Voids({
+const voids = new Voids({
     "id": "PAYMENT_UUID",
 })
 
-var client = new Client('YOUR_CONSUMER_KEY', 'YOUR_CONSUMER_SECRET')
+const client = new Client('YOUR_CONSUMER_KEY', 'YOUR_CONSUMER_SECRET')
 client.call(voids).then(function(response){
     // Deal with response
 }).catch(function (error){
@@ -281,15 +294,16 @@ client.call(voids).then(function(response){
 #### Get existing void
 
 ```javascript
-var Client = require('cardinity-nodejs/client.js')
-var GetVoids = require('cardinity-nodejs/getvoids.js')
+const Cardinity = require('cardinity-nodejs')
+const Client = Cardinity.client()
+const GetVoids = Cardinity.getVoids();
 
-var voids = new GetVoids({
+const voids = new GetVoids({
     "id": "PAYMENT_UUID",
     "void_id": "VOID_UUID"
 })
 
-var client = new Client('YOUR_CONSUMER_KEY', 'YOUR_CONSUMER_SECRET')
+const client = new Client('YOUR_CONSUMER_KEY', 'YOUR_CONSUMER_SECRET')
 client.call(voids).then(function(response){
     // Deal with response
 }).catch(function (error){
@@ -300,14 +314,15 @@ client.call(voids).then(function(response){
 #### Get all voids
 
 ```javascript
-var Client = require('cardinity-nodejs/client.js')
-var GetVoids = require('cardinity-nodejs/getvoids.js')
+const Cardinity = require('cardinity-nodejs')
+const Client = Cardinity.client()
+const GetVoids = Cardinity.getVoids();
 
-var voids = new GetVoids({
+const voids = new GetVoids({
     "id": "PAYMENT_UUID"
 })
 
-var client = new Client('YOUR_CONSUMER_KEY', 'YOUR_CONSUMER_SECRET')
+const client = new Client('YOUR_CONSUMER_KEY', 'YOUR_CONSUMER_SECRET')
 client.call(voids).then(function(response){
     // Deal with response
 }).catch(function (error){
