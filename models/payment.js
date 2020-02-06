@@ -1,5 +1,9 @@
 var method = Payment.prototype;
 
+/**
+ * Sets variables for a Payment request
+ * @param {object} vars 
+ */
 function Payment(vars) {
     this.method = 'POST';
     this.amount = vars.amount;

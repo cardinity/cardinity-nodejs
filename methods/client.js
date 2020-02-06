@@ -1,22 +1,38 @@
 var method = Client.prototype;
 
+/**
+ * Sets consumer key and consumer secret
+ * 
+ * @param {string} consumerKey 
+ * @param {string} consumerSecret 
+ */
+
 function Client(consumerKey, consumerSecret) {
     this.consumerKey = consumerKey;
     this.consumerSecret = consumerSecret;
 }
 
+/**
+ * Sends request to Cardinity Payments API
+ * 
+ * @param {object} body Variables for request (method, payment information)
+ * @return {object} Response from server
+ */
+
 method.call = async function(body) {
+    // For asynchronous request
     const requestPromise = require('request-promise');
+    // For authorization to server
     const OAuth = require('oauth-1.0a');
     const crypto = require('crypto');
-    // Initialize
+    // Initialize OAuth
     const oauth = OAuth({
         consumer: {
             key: this.consumerKey,
             secret: this.consumerSecret,
         },
         signature_method: 'HMAC-SHA1',
-        
+        // Hash the request
         hash_function(base_string, secret) {
             return crypto
                 .createHmac('sha1', secret)
@@ -38,7 +54,7 @@ method.call = async function(body) {
     ).then(function (body){
         return JSON.parse(body);
     }).catch(function (error){
-        return error;
+        return JSON.parse(error);
     })
 }
 

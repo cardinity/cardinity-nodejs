@@ -1,5 +1,9 @@
 var method = Recurring.prototype;
 
+/**
+ * Sets variables for a Recurring Payment request
+ * @param {object} vars 
+ */
 function Recurring(vars) {
     this.method = 'POST';
     this.amount = vars.amount;

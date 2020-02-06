@@ -1,5 +1,10 @@
 var method = GetPayment.prototype;
 
+/**
+ * Sets varaibles to get payment information
+ * 
+ * @param {object} vars Variables for reqest
+ */
 function GetPayment(vars) {
     this.method = 'GET';
     if(Number.isInteger(vars)){

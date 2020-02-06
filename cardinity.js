@@ -1,3 +1,6 @@
+/**
+ * Exports methods and models for easy use
+ */
 exports.client = () => require('./methods/client.js');
 exports.payment = () => require('./models/payment.js');
 exports.finalize = () => require('./models/finalize.js');

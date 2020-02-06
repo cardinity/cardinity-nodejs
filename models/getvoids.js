@@ -1,5 +1,10 @@
 var method = Voids.prototype;
 
+/**
+ * Sets varaibles to get void information
+ * 
+ * @param {object} vars Variables for reqest
+ */
 function Voids(vars) {
     this.method = 'GET';
     if(vars.void_id){
