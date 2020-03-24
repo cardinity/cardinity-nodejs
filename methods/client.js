@@ -54,7 +54,7 @@ method.call = async function(body) {
     ).then(function (body){
         return JSON.parse(body);
     }).catch(function (error){
-        return JSON.parse(error);
+        return JSON.parse(error.error);
     })
 }
 

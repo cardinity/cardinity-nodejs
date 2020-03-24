@@ -1,6 +1,6 @@
 {
   "name": "cardinity-nodejs",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Cardinity NodeJS Library",
   "main": "cardinity.js",
   "scripts": {
