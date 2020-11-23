@@ -40,27 +40,47 @@ const Client = Cardinity.client()
 const Payment = Cardinity.payment()
 
 const purchase = new Payment({
-        "amount": "50.00",
-        "currency": "EUR",
-        "settle": true,
-        "description": "Payment from NodeJS",
-        "order_id": "NodeJS1",
-        "country": "LT",
-        "payment_instrument": {
-            "pan": "5555555555554444",
-            "exp_year": "2222",
-            "exp_month": "2",
-            "cvc": "222",
-            "holder": "John Doe",
-        },
-    })
-
-const client = new Client('YOUR_CONSUMER_KEY', 'YOUR_CONSUMER_SECRET')
-client.call(purchase).then(function(response){
-    // Deal with response
-}).catch(function(error){
-    // Deal with error
-});
+    "amount": 50.00,
+    "currency": "EUR",
+    "settle": true,
+    "description": "Payment from NodeJS",
+    "order_id": "NodeJS1",
+    "country": "LT",
+    'payment_method' : 'card',
+    "payment_instrument": {
+        "pan": "5555555555554444",
+        "exp_year": "2222",
+        "exp_month": "2",
+        "cvc": "222",
+        "holder": "John Doe",
+    },
+    'threeds2_data' : {
+    'notification_url' : 'http://localhost:3000',
+    'browser_info' : {
+    'accept_header' : 'Some header',
+    'browser_language' : 'en',
+    'screen_width' : 390,
+    'screen_height' : 400,
+    'challenge_window_size' : '390x400',
+    'user_agent' : 'super user agent',
+    'color_depth' : 24,
+    'time_zone' : -60,
+    'ip_address' : '192.168.0.1',
+    'javascript_enabled' : true,
+    'java_enabled' : false
+    }
+})
+// check if there is any data validation errors.
+if (purchase.errors) {
+    // show errors or print errors to logs here.
+} else {
+    const client = new Client('YOUR_CONSUMER_KEY', 'YOUR_CONSUMER_SECRET')
+    client.call(purchase).then(function(response){
+        // Deal with response
+    }).catch(function(error){
+        // Deal with error
+    });
+}
 ```
 
 #### Create new recurring payment
@@ -71,7 +91,7 @@ const Client = Cardinity.client()
 const Recurring = Cardinity.recurring()
 
 const recurring = new Recurring({
-    "amount": "50.00",
+    "amount": 50.00,
     "currency": "EUR",
     "settle": false,
     "description": "some description",
@@ -82,15 +102,45 @@ const recurring = new Recurring({
     },
 })
 
-const client = new Client('YOUR_CONSUMER_KEY', 'YOUR_CONSUMER_SECRET')
-client.call(recurring).then(function(response){
-    // Deal with response
-}).catch(function (error){
-    // Deal with error
-});
+if (recurring.errors) {
+    // show errors or print errors to logs here.
+} else {
+    const client = new Client('YOUR_CONSUMER_KEY', 'YOUR_CONSUMER_SECRET')
+    client.call(recurring).then(function(response){
+        // Deal with response
+    }).catch(function (error){
+        // Deal with error
+    });
+}
 ```
 
-#### Finalize pending payment
+#### Finalize pending payment 3D secure V2
+
+```javascript
+const Cardinity = require('cardinity-nodejs')
+const Client = Cardinity.client()
+const Finalize = Cardinity.finalize()
+
+const patch = new Finalize({
+    "threeDsSessionData": 'THREEDS_SESSION_DATA_RECEIVED_FROM_ACS',
+    "cres": 'CRES_RECEIVED_FROM_ACS',
+    'threedsv2': true
+})
+
+if (patch.errors) {
+    // show errors or print errors to logs here.
+} else {
+    const client = new Client('YOUR_CONSUMER_KEY', 'YOUR_CONSUMER_SECRET')
+    client.call(patch).then(function(response){
+        // Deal with response
+    }).catch(function (error){
+        // Deal with error
+    });
+}
+
+```
+
+#### Finalize pending payment 3D secure V1
 
 ```javascript
 const Cardinity = require('cardinity-nodejs')
@@ -102,12 +152,51 @@ const patch = new Finalize({
     "id": 'PENDING_PAYMENT_UUID',
 })
 
-const client = new Client('YOUR_CONSUMER_KEY', 'YOUR_CONSUMER_SECRET')
-client.call(patch).then(function(response){
-    // Deal with response
-}).catch(function (error){
-    // Deal with error
-});
+if (patch.errors) {
+    // show errors or print errors to logs here.
+} else {
+    const client = new Client('YOUR_CONSUMER_KEY', 'YOUR_CONSUMER_SECRET')
+    client.call(patch).then(function(response){
+        // Deal with response
+    }).catch(function (error){
+        // Deal with error
+    });
+}
+```
+
+#### Finalize processing 3D secure v1 or v2
+This example suppose Express package is used: `const app = express()`:
+```javascript
+app.get('/callback', (req, res) => {
+    // if received 3D secure v2 parameter
+    if (req.body.cres !== 'undefined' && req.body.cres) {
+        let finalize_obj = new Finalize({
+            'threeDsSessionData': req.body.threeDSSessionData,
+            'cres': req.body.cres,
+            'threedsv2': true
+        });
+        if (finalize_obj.errors) {
+            // show errors or print errors to logs here.
+        } else {
+            client.call(finalize_obj).then(function (response) {
+                // process successfull payment
+            }).catch(function (error) {
+                // show errors or print errors to logs here.
+            })
+        }
+    } else if (req.body.PaRes !== 'undefined' && req.body.PaRes) {
+        // if received 3D secure v1 parameter
+        let finalize_obj = new Finalize({
+            'PaRes': req.body.PaRes,
+            'MD': req.body.MD
+        });
+        client.call(finalize_obj).then(function (response) {
+            // process successfull payment
+        }).catch(function (error) {
+            // show errors or print errors to logs here.
+        })
+    }
+})
 ```
 
 #### Get existing payment
@@ -329,3 +418,9 @@ client.call(voids).then(function(response){
     // Deal with error
 });
 ```
+## Change log
+
+### Added
+- Added validator package for validating `Payment` and `Recurring` and `Finalize` objects.
+- Added `Constraint` class to create constraints for `Payment` and `Recurring` and `Finalize` objects.
+- Added `constraint` parameters inside `Payment` and `Recurring` and `Finalize` methods.
