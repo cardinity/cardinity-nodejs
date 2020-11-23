@@ -54,20 +54,21 @@ const purchase = new Payment({
         "cvc": "222",
         "holder": "John Doe",
     },
-    'threeds2_data' : {
-    'notification_url' : 'http://localhost:3000',
-    'browser_info' : {
-    'accept_header' : 'Some header',
-    'browser_language' : 'en',
-    'screen_width' : 390,
-    'screen_height' : 400,
-    'challenge_window_size' : '390x400',
-    'user_agent' : 'super user agent',
-    'color_depth' : 24,
-    'time_zone' : -60,
-    'ip_address' : '192.168.0.1',
-    'javascript_enabled' : true,
-    'java_enabled' : false
+    'threeds2_data': {
+        'notification_url': 'http://localhost:3000',
+        'browser_info': {
+            'accept_header': 'Some header',
+            'browser_language': 'en',
+            'screen_width': 390,
+            'screen_height': 400,
+            'challenge_window_size': '390x400',
+            'user_agent': 'super user agent',
+            'color_depth': 24,
+            'time_zone': -60,
+            'ip_address': '192.168.0.1',
+            'javascript_enabled': true,
+            'java_enabled': false
+        }
     }
 })
 // check if there is any data validation errors.
