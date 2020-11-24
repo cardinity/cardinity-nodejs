@@ -174,7 +174,7 @@ app.get('/callback', (req, res) => {
     if (req.body.cres) {
         // 3D secure v2 if received `cres` parameter
         let finalize_obj = new Finalize({
-            'payment_id': req.body.threeDSSessionData,
+            'id': req.body.threeDSSessionData,
             'cres': req.body.cres,
             'threedsv2': true // flag for 3D secure V2
         });
@@ -190,8 +190,8 @@ app.get('/callback', (req, res) => {
     } else if (req.body.PaRes) {
         // 3D secure v1 if received `PaRes` parameter
         let finalize_obj = new Finalize({
-            'PaRes': req.body.PaRes,
-            'id': req.body.id
+            'id': req.body.id,
+            'authorize_data': req.body.PaRes
         });
         client.call(finalize_obj).then(function (response) {
             // process successfull payment

@@ -15,10 +15,10 @@ function Finalize(vars) {
 
     if (vars.threedsv2 == true) {
         this.cres = vars.cres;
-        this.trailing = '/' + vars.payment_id;
+        this.trailing = '/' + vars.id;
         constraints = {
-            cres: constraint.string,
-            payment_id: constraint.paymentId
+            id: constraint.paymentId,
+            cres: constraint.string
         }
     } else {
         this.trailing = '/' + vars.id;
