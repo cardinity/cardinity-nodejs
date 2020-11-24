@@ -28,8 +28,6 @@ function Finalize(vars) {
             authorize_data: constraint.string
         }
     }
-    if (!constraints) throw new Error('missing parameters');
-    console.log('Finalize constraints:');console.log(constraints);
     this.errors = validate(vars, constraints);
 }
 module.exports = Finalize;
