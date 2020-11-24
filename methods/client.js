@@ -1,4 +1,4 @@
-var method = Client.prototype;
+const method = Client.prototype;
 
 /**
  * Sets consumer key and consumer secret

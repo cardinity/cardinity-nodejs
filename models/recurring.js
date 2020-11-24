@@ -1,7 +1,7 @@
-var validate = require('validate.js');
-var Constraint = require('constraint');
+const validate = require('validate.js');
+const Constraint = require('constraint');
 
-var method = Recurring.prototype;
+const method = Recurring.prototype;
 
 /**
  * Sets variables for a Recurring Payment request

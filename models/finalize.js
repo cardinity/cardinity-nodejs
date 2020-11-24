@@ -1,7 +1,7 @@
-var validate = require('validate.js');
-var Constraint = require('./constraint.js');
+const validate = require('validate.js');
+const Constraint = require('./constraint.js');
 
-var method = Finalize.prototype;
+const method = Finalize.prototype;
 
 /**
  * Sets varaibles for a Finalize request
@@ -15,10 +15,10 @@ function Finalize(vars) {
 
     if (vars.threedsv2 == true) {
         this.cres = vars.cres;
-        this.trailing = '/' + vars.threeDsSessionData;
+        this.trailing = '/' + vars.payment_id;
         constraints = {
             cres: constraint.string,
-            threeDsSessionData: constraint.string
+            payment_id: constraint.paymentId
         }
     } else {
         this.trailing = '/' + vars.id;

@@ -1,4 +1,4 @@
-var method = Refund.prototype;
+const method = Refund.prototype;
 
 /**
  * Sets variables for a Refund request

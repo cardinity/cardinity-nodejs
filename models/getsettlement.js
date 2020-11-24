@@ -1,4 +1,4 @@
-var method = GetSettlement.prototype;
+const method = GetSettlement.prototype;
 
 /**
  * Sets varaibles to get settlement information

@@ -1,4 +1,4 @@
-var method = GetRefund.prototype;
+const method = GetRefund.prototype;
 
 /**
  * Sets varaibles to get refund information

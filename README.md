@@ -40,35 +40,34 @@ const Client = Cardinity.client()
 const Payment = Cardinity.payment()
 
 const purchase = new Payment({
-    "amount": 50.00,
-    "currency": "EUR",
-    "settle": true,
-    "description": "Payment from NodeJS",
-    "order_id": "NodeJS1",
-    "country": "LT",
-    'payment_method' : 'card',
-    "payment_instrument": {
-        "pan": "5555555555554444",
-        "exp_year": "2222",
-        "exp_month": "2",
-        "cvc": "222",
-        "holder": "John Doe",
+    'amount': 50.00,
+    'currency': 'EUR',
+    'settle': true,
+    'description': 'Payment from NodeJS',
+    'order_id': 'NodeJS1',
+    'country': 'LT',
+    'payment_method': 'card',
+    'payment_instrument': {
+        'pan': '5555555555554444',
+        'exp_year': '2222',
+        'exp_month': '2',
+        'cvc': '222',
+        'holder': 'John Doe',
     },
     'threeds2_data': {
-        'notification_url': 'http://localhost:3000',
-        'browser_info': {
-            'accept_header': 'Some header',
-            'browser_language': 'en',
-            'screen_width': 390,
-            'screen_height': 400,
-            'challenge_window_size': '390x400',
-            'user_agent': 'super user agent',
-            'color_depth': 24,
-            'time_zone': -60,
-            'ip_address': '192.168.0.1',
-            'javascript_enabled': true,
-            'java_enabled': false
-        }
+    'notification_url': 'http://localhost:3000',
+    'browser_info': {
+    'accept_header': 'Some header',
+    'browser_language': 'en',
+    'screen_width': 390,
+    'screen_height': 400,
+    'challenge_window_size': '390x400',
+    'user_agent': 'super user agent',
+    'color_depth': 24,
+    'time_zone': -60,
+    'ip_address': '192.168.0.1',
+    'javascript_enabled': true,
+    'java_enabled': false
     }
 })
 // check if there is any data validation errors.
@@ -92,14 +91,14 @@ const Client = Cardinity.client()
 const Recurring = Cardinity.recurring()
 
 const recurring = new Recurring({
-    "amount": 50.00,
-    "currency": "EUR",
-    "settle": false,
-    "description": "some description",
-    "order_id": "12345678",
-    "country": "LT",
-    "payment_instrument": {
-        "payment_id": "INITAL_PAYMENT_ID",
+    'amount': 50.00,
+    'currency': 'EUR',
+    'settle': false,
+    'description': 'some description',
+    'order_id': '12345678',
+    'country': 'LT',
+    'payment_instrument': {
+        'payment_id': 'INITAL_PAYMENT_ID',
     },
 })
 
@@ -123,9 +122,9 @@ const Client = Cardinity.client()
 const Finalize = Cardinity.finalize()
 
 const patch = new Finalize({
-    "threeDsSessionData": 'THREEDS_SESSION_DATA_RECEIVED_FROM_ACS',
-    "cres": 'CRES_RECEIVED_FROM_ACS',
-    'threedsv2': true
+    'payment_id': 'THREEDS_SESSION_DATA_RECEIVED_FROM_ACS',
+    'cres': 'CRES_RECEIVED_FROM_ACS',
+    'threedsv2': true // flag for 3D secure V2
 })
 
 if (patch.errors) {
@@ -149,8 +148,8 @@ const Client = Cardinity.client()
 const Finalize = Cardinity.finalize()
 
 const patch = new Finalize({
-    "authorize_data": 'PARES_RECEIVED_FROM_ACS',
-    "id": 'PENDING_PAYMENT_UUID',
+    'authorize_data': 'PARES_RECEIVED_FROM_ACS',
+    'id': 'PENDING_PAYMENT_UUID',
 })
 
 if (patch.errors) {
@@ -165,16 +164,19 @@ if (patch.errors) {
 }
 ```
 
-#### Finalize processing 3D secure v1 or v2
+#### Finalize processing 3D secure v2 and in case of missing parameters v1
 This example suppose Express package is used: `const app = express()`:
 ```javascript
 app.get('/callback', (req, res) => {
-    // if received 3D secure v2 parameter
-    if (req.body.cres !== 'undefined' && req.body.cres) {
+    /** If a technical error occured during payment finalization, Cardinity will try to perform 3D Secure V1 authorization.
+     * You can either retry 3D Secure V2 flow, or perform 3D Secure V1 flow
+     */
+    if (req.body.cres) {
+        // 3D secure v2 if received `cres` parameter
         let finalize_obj = new Finalize({
-            'threeDsSessionData': req.body.threeDSSessionData,
+            'payment_id': req.body.threeDSSessionData,
             'cres': req.body.cres,
-            'threedsv2': true
+            'threedsv2': true // flag for 3D secure V2
         });
         if (finalize_obj.errors) {
             // show errors or print errors to logs here.
@@ -185,11 +187,11 @@ app.get('/callback', (req, res) => {
                 // show errors or print errors to logs here.
             })
         }
-    } else if (req.body.PaRes !== 'undefined' && req.body.PaRes) {
-        // if received 3D secure v1 parameter
+    } else if (req.body.PaRes) {
+        // 3D secure v1 if received `PaRes` parameter
         let finalize_obj = new Finalize({
             'PaRes': req.body.PaRes,
-            'MD': req.body.MD
+            'id': req.body.id
         });
         client.call(finalize_obj).then(function (response) {
             // process successfull payment
@@ -208,7 +210,7 @@ const Client = Cardinity.client()
 const GetPayment = Cardinity.getPayment()
 
 const payments = new GetPayment({
-    "id": "PAYMENT_UUID",
+    'id': 'PAYMENT_UUID',
 })
 
 const client = new Client('YOUR_CONSUMER_KEY', 'YOUR_CONSUMER_SECRET')
@@ -246,9 +248,9 @@ const Client = Cardinity.client()
 const Refund = Cardinity.refund()
 
 const refund = new Refund({
-    "amount": "50.00",
-    "description": "some optional description",
-    "id": 'PAYMENT_UUID',
+    'amount': '50.00',
+    'description': 'some optional description',
+    'id': 'PAYMENT_UUID',
 })
 
 const client = new Client('YOUR_CONSUMER_KEY', 'YOUR_CONSUMER_SECRET')
@@ -267,8 +269,8 @@ const Client = Cardinity.client()
 const GetRefund = Cardinity.getRefund()
 
 const refunds = new GetRefund({
-    "id": "PAYMENT_UUID",
-    "refund_id": "REFUND_UUID"
+    'id': 'PAYMENT_UUID',
+    'refund_id': 'REFUND_UUID'
 })
 
 const client = new Client('YOUR_CONSUMER_KEY', 'YOUR_CONSUMER_SECRET')
@@ -287,7 +289,7 @@ const Client = Cardinity.client()
 const GetRefund = Cardinity.getRefund()
 
 const refund = new GetRefund({
-    "id": "PAYMENT_UUID"
+    'id': 'PAYMENT_UUID'
 })
 
 const client = new Client('YOUR_CONSUMER_KEY', 'YOUR_CONSUMER_SECRET')
@@ -308,9 +310,9 @@ const Client = Cardinity.client()
 const Settlement = Cardinity.settlement()
 
 const settle = new Settlement({
-    "id": "PAYMENT_UUID",
-    "amount": "50.00",
-    "description": "optional description"
+    'id': 'PAYMENT_UUID',
+    'amount': '50.00',
+    'description': 'optional description'
 })
 
 const client = new Client('YOUR_CONSUMER_KEY', 'YOUR_CONSUMER_SECRET')
@@ -329,8 +331,8 @@ const Client = Cardinity.client()
 const GetSettlement = Cardinity.getSettlement()
 
 const settle = new GetSettlement({
-    "id": "PAYMENT_UUID",
-    "settlement_id": "SETTLEMENT_UUID"
+    'id': 'PAYMENT_UUID',
+    'settlement_id': 'SETTLEMENT_UUID'
 })
 
 const client = new Client('YOUR_CONSUMER_KEY', 'YOUR_CONSUMER_SECRET')
@@ -349,7 +351,7 @@ const Client = Cardinity.client()
 const GetSettlement = Cardinity.getSettlement()
 
 const settle = new GetSettlement({
-    "id": "PAYMENT_UUID"
+    'id': 'PAYMENT_UUID'
 })
 
 const client = new Client('YOUR_CONSUMER_KEY', 'YOUR_CONSUMER_SECRET')
@@ -370,7 +372,7 @@ const Client = Cardinity.client()
 const Voids = Cardinity.voids()
 
 const voids = new Voids({
-    "id": "PAYMENT_UUID",
+    'id': 'PAYMENT_UUID',
 })
 
 const client = new Client('YOUR_CONSUMER_KEY', 'YOUR_CONSUMER_SECRET')
@@ -389,8 +391,8 @@ const Client = Cardinity.client()
 const GetVoids = Cardinity.getVoids();
 
 const voids = new GetVoids({
-    "id": "PAYMENT_UUID",
-    "void_id": "VOID_UUID"
+    'id': 'PAYMENT_UUID',
+    'void_id': 'VOID_UUID'
 })
 
 const client = new Client('YOUR_CONSUMER_KEY', 'YOUR_CONSUMER_SECRET')
@@ -409,7 +411,7 @@ const Client = Cardinity.client()
 const GetVoids = Cardinity.getVoids();
 
 const voids = new GetVoids({
-    "id": "PAYMENT_UUID"
+    'id': 'PAYMENT_UUID'
 })
 
 const client = new Client('YOUR_CONSUMER_KEY', 'YOUR_CONSUMER_SECRET')

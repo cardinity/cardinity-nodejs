@@ -1,7 +1,7 @@
-var validate = require('validate.js');
-var Constraint = require('./constraint.js');
+const validate = require('validate.js');
+const Constraint = require('./constraint.js');
 
-var method = Payment.prototype;
+const method = Payment.prototype;
 
 /**
  * Sets variables for a Payment request

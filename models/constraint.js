@@ -1,4 +1,4 @@
-var validate = require('validate.js');
+const validate = require('validate.js');
 
 const Constraint = class {
 
@@ -59,7 +59,19 @@ const Constraint = class {
 				minimum: 2,
 				maximum: 50
 			},
-			format: { pattern: "[A-Za-z0-9.\-]+" }
+			format: { pattern: "^[A-Za-z0-9.\-]+$" }
+		}
+	}
+
+	/**
+	 * @return {object} of oderID constraints 
+	 */
+	get paymentId() {
+		return {
+			presence: true,
+			type: "string",
+			length: { is: 36 },
+			format: { pattern: "^[A-Za-z0-9.\-]+$" }
 		}
 	}
 
@@ -202,7 +214,7 @@ const Constraint = class {
 				minimum: 2,
 				maximum: 20,
 			},
-			format: { pattern: "[A-Za-z0-9\-]+" }
+			format: { pattern: "^[A-Za-z\-]+$" }
 		}
 	}
 
@@ -277,7 +289,7 @@ const Constraint = class {
 		return {
 			type: "string",
 			length: { minimum: 7 },
-			format: { pattern: "[0-9.]+" }
+			format: { pattern: "^[0-9.]+$" }
 		}
 	}
 
