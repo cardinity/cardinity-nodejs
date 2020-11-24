@@ -1,5 +1,12 @@
 const validate = require('validate.js');
 
+const challengeWindowSizes = [
+	"250x400",
+	"390x400",
+	"500x600",
+	"600x400",
+	"full-screen"
+];
 const Constraint = class {
 
 	/**
@@ -85,7 +92,7 @@ const Constraint = class {
 			type: "string",
 			inclusion: {
 				within: [value],
-				message: "should be 'card'"
+				message: "should be " + value
 			}
 		}
 	}
@@ -212,7 +219,7 @@ const Constraint = class {
 			type: "string",
 			length: {
 				minimum: 2,
-				maximum: 20,
+				maximum: 8,
 			},
 			format: { pattern: "^[A-Za-z\-]+$" }
 		}
@@ -233,19 +240,13 @@ const Constraint = class {
 	 * @return {object} of browser challenge windws constraints
 	 */
 	get challengeWindowSize() {
-		let sizes = [
-			"250x400",
-			"390x400",
-			"500x600",
-			"600x400",
-			"full-screen"
-		];
+
 		return {
 			presence: true,
 			type: "string",
 			inclusion: {
-				within: sizes,
-				message: "should be one of: " + sizes
+				within: challengeWindowSizes,
+				message: "should be one of: " + challengeWindowSizes
 			}
 		}
 	}
@@ -318,7 +319,7 @@ const Constraint = class {
 			type: "string",
 			length: {
 				minimum: 2,
-				maximum: 50
+				maximum: 4
 			}
 		}
 	}
