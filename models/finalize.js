@@ -24,7 +24,7 @@ function Finalize(vars) {
         this.trailing = '/' + vars.id;
         this.authorize_data = vars.authorize_data;
         constraints = {
-            id: constraint.orderId,
+            id: constraint.paymentId,
             authorize_data: constraint.string
         }
     }
