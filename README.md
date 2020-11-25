@@ -123,7 +123,7 @@ const Client = Cardinity.client()
 const Finalize = Cardinity.finalize()
 
 const patch = new Finalize({
-    'id': 'THREEDS_SESSION_DATA_RECEIVED_FROM_ACS',
+    'id': 'PENDING_PAYMENT_UUID',
     'cres': 'CRES_RECEIVED_FROM_ACS',
     'threedsv2': true // flag for 3D secure V2
 });
@@ -174,7 +174,7 @@ app.get('/callback', (req, res) => {
     if (req.body.cres) {
         // 3D secure v2 if received `cres` parameter
         let finalize_obj = new Finalize({
-            'id': req.body.threeDSSessionData,
+            'id': 'PENDING_PAYMENT_UUID',
             'cres': req.body.cres,
             'threedsv2': true // flag for 3D secure V2
         });
@@ -190,7 +190,7 @@ app.get('/callback', (req, res) => {
     } else if (req.body.PaRes) {
         // 3D secure v1 if received `PaRes` parameter
         let finalize_obj = new Finalize({
-            'id': req.body.id,
+            'id': 'PENDING_PAYMENT_UUID',
             'authorize_data': req.body.PaRes
         });
         client.call(finalize_obj).then(function (response) {
