@@ -49,27 +49,28 @@ const purchase = new Payment({
     'payment_method': 'card',
     'payment_instrument': {
         'pan': '5555555555554444',
-        'exp_year': '2222',
-        'exp_month': '2',
+        'exp_year': 2022,
+        'exp_month': 2,
         'cvc': '222',
         'holder': 'John Doe',
     },
     'threeds2_data': {
-    'notification_url': 'http://localhost:3000',
-    'browser_info': {
-    'accept_header': 'Some header',
-    'browser_language': 'en',
-    'screen_width': 390,
-    'screen_height': 400,
-    'challenge_window_size': '390x400',
-    'user_agent': 'super user agent',
-    'color_depth': 24,
-    'time_zone': -60,
-    'ip_address': '192.168.0.1',
-    'javascript_enabled': true,
-    'java_enabled': false
+        'notification_url': 'http://localhost:3000',
+        'browser_info': {
+            'accept_header': 'Some header',
+            'browser_language': 'en',
+            'screen_width': 390,
+            'screen_height': 400,
+            'challenge_window_size': '390x400',
+            'user_agent': 'super user agent',
+            'color_depth': 24,
+            'time_zone': -60,
+            'ip_address': '192.168.0.1',
+            'javascript_enabled': true,
+            'java_enabled': false
+        }
     }
-})
+});
 // check if there is any data validation errors.
 if (purchase.errors) {
     // show errors or print errors to logs here.
@@ -122,10 +123,10 @@ const Client = Cardinity.client()
 const Finalize = Cardinity.finalize()
 
 const patch = new Finalize({
-    'payment_id': 'THREEDS_SESSION_DATA_RECEIVED_FROM_ACS',
+    'id': 'THREEDS_SESSION_DATA_RECEIVED_FROM_ACS',
     'cres': 'CRES_RECEIVED_FROM_ACS',
     'threedsv2': true // flag for 3D secure V2
-})
+});
 
 if (patch.errors) {
     // show errors or print errors to logs here.
@@ -137,7 +138,6 @@ if (patch.errors) {
         // Deal with error
     });
 }
-
 ```
 
 #### Finalize pending payment 3D secure V1
