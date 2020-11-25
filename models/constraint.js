@@ -59,6 +59,20 @@ const Constraint = class {
 	/**
 	 * @return {object} of oderID constraints 
 	 */
+	get orderId() {
+		return {
+			type: "string",
+			length: {
+				minimum: 2,
+				maximum: 50
+			},
+			format: { pattern: "^[A-Za-z0-9.\-]+$" }
+		}
+	}
+
+	/**
+	 * @return {object} of oderID constraints 
+	 */
 	get paymentId() {
 		return {
 			presence: true,
