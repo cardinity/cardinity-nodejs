@@ -1,21 +1,28 @@
-{
+{ 
   "name": "cardinity-nodejs",
-  "version": "1.0.2",
+  "version": "2.0.0",
   "description": "Cardinity NodeJS Library",
+  "homepage": "https://github.com/cardinity/cardinity-nodejs/blob/master/README.md",
+  "license": "MIT",
   "main": "cardinity.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "author": {
+    "name": "KiprasT"
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com:cardinity/cardinity-nodejs.git"
+    "url": "git+ssh://git@github.com/cardinity/cardinity-nodejs.git"
   },
-  "author": "KiprasT",
-  "license": "MIT",
-  "homepage": "https://github.com/cardinity/cardinity-nodejs/blob/master/README.md",
+  "bugs": {
+    "url": "https://github.com/cardinity/cardinity-nodejs/issues"
+  },
   "dependencies": {
+    "oauth-1.0a": "^2.2.6",
     "request": "^2.88.0",
     "request-promise": "^4.2.5",
-    "oauth-1.0a": "^2.2.6"
-  }
+    "validate.js": "^0.13.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "deprecated": false
 }

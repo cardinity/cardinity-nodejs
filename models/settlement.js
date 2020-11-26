@@ -1,4 +1,4 @@
-var method = Settle.prototype;
+const method = Settle.prototype;
 
 /**
  * Sets variables for a Settlement request

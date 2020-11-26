@@ -1,4 +1,4 @@
-var method = Voids.prototype;
+const method = Voids.prototype;
 
 /**
  * Sets varaibles to get void information

@@ -12,3 +12,4 @@ exports.getPayment = () => require('./models/getpayment.js');
 exports.getSettlement = () => require('./models/getsettlement.js');
 exports.getVoids = () => require('./models/getvoids.js');
 exports.getRefund = () => require('./models/getrefund.js');
+exports.constraint = () => require('./models/constraint.js');

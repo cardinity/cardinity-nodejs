@@ -1,10 +1,24 @@
-var method = Recurring.prototype;
+const validate = require('validate.js');
+const Constraint = require('constraint');
+
+const method = Recurring.prototype;
 
 /**
  * Sets variables for a Recurring Payment request
  * @param {object} vars 
  */
 function Recurring(vars) {
+	let constraint = new Constraint;
+    let constraints = {
+        amount: constraint.amount,
+        currency: constraint.currency,
+        settle: constraint.settle,
+        description: constraint.description,
+        order_id: constraint.orderId,
+        country: constraint.country
+    }
+    this.errors = validate(vars, constraints);
+    
     this.method = 'POST';
     this.amount = vars.amount;
     this.currency = vars.currency;

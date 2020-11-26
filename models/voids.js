@@ -1,4 +1,4 @@
-var method = Voids.prototype;
+const method = Voids.prototype;
 
 /**
  * Sets variables for a Void request

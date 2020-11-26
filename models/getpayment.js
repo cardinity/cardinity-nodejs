@@ -1,4 +1,4 @@
-var method = GetPayment.prototype;
+const method = GetPayment.prototype;
 
 /**
  * Sets varaibles to get payment information
