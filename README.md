@@ -77,7 +77,44 @@ if (purchase.errors) {
 } else {
     const client = new Client('YOUR_CONSUMER_KEY', 'YOUR_CONSUMER_SECRET')
     client.call(purchase).then(function(response){
-        // Deal with response
+        if (response.status == 'approved') {
+            // handle approved payment
+        } else if (response.status == 'pending') {
+            // handle 3D secure flow
+            if (response.authorization_information) {
+                var form_url = response.authorization_information.url;
+                var inputs = '<input type="hidden" name="PaReq" value="'+
+                    response.authorization_information.data +'" />'+
+                    '<input type="hidden" name="TermUrl" value="http://localhost:3000" />';
+                var threed_key = 'MD';
+            } else if (response.threeds2_data) {
+                var form_url = response.threeds2_data.acs_url;
+                var inputs = '<input name="creq" value="'+ response.threeds2_data.creq +'" />';
+                var threed_key = 'threeDSSessionData';
+            }
+            res.setHeader('Content-Type', 'text/html');
+            form = '<html><head>'+
+                '<title>3-D Secure Example</title>'+
+                '<script type="text/javascript">'+
+                +'function OnLoadEvent(){'+
+                    // Make the form post as soon as it has been loaded.
+                    +'document.ThreeDForm.submit();'+
+                +'}'+
+                '</script>'+
+                '</head>'+
+                '<body onload="OnLoadEvent();">'+
+                '<form name="ThreeDForm" method="POST" action="'+ form_url +'">'+
+                    '<button type=submit>Click Here</button>'+
+                    inputs +
+                    '<input type="hidden" name="'+ threed_key +'" value="'+ 
+                        response.id +'" />'+
+                '</form>'+
+                '</body></html>';
+            res.end(form);
+        } else {
+            res.setHeader('Content-Type', 'text/plain')
+            res.end(JSON.stringify(response, null, 2))
+        }
     }).catch(function(error){
         // Deal with error
     });
@@ -171,33 +208,53 @@ app.get('/callback', (req, res) => {
     /** If a technical error occured during payment finalization, Cardinity will try to perform 3D Secure V1 authorization.
      * You can either retry 3D Secure V2 flow, or perform 3D Secure V1 flow
      */
-    if (req.body.cres) {
-        // 3D secure v2 if received `cres` parameter
-        let finalize_obj = new Finalize({
-            'id': 'PENDING_PAYMENT_UUID',
+    if (req.body.PaRes) {
+        // finalize 3dsv1 if `PaRes` parameter is received
+        var finalize_obj = new Finalize({
+        'id': req.body.MD,
+        'authorize_data': req.body.PaRes
+    })
+    } else if (req.body.cres) {
+        // finalize 3dsv1 if `cres` parameter is received
+        var finalize_obj = new Finalize({
+            'id': req.body.threeDSSessionData,
             'cres': req.body.cres,
-            'threedsv2': true // flag for 3D secure V2
+            'threedsv2': true
         });
-        if (finalize_obj.errors) {
-            // show errors or print errors to logs here.
-        } else {
-            client.call(finalize_obj).then(function (response) {
-                // process successfull payment
-            }).catch(function (error) {
-                // show errors or print errors to logs here.
-            })
-        }
-    } else if (req.body.PaRes) {
-        // 3D secure v1 if received `PaRes` parameter
-        let finalize_obj = new Finalize({
-            'id': 'PENDING_PAYMENT_UUID',
-            'authorize_data': req.body.PaRes
-        });
+    }
+    if (finalize_obj.errors) {
+        // show errors if exist
+        res.end(JSON.stringify(finalize_obj.errors, null, 2));
+    } else {
         client.call(finalize_obj).then(function (response) {
-            // process successfull payment
+            // if finalize 3D secure v2 failed 'pending' status is returned.
+            if (response.status == 'pending') {
+            // process through 3D secure v1 flow starting with form.
+            form = '<html><head>'+
+            '<title>3-D Secure V1 Example</title>'+
+            '<script type="text/javascript">'+
+                +'function OnLoadEvent(){'+
+                // Make the form post as soon as it has been loaded.
+                +'document.ThreeDForm.submit();'+
+                +'}'+
+            '</script>'+
+            '</head>'+
+            '<body onload="OnLoadEvent();">'+
+                '<form name="ThreeDForm" method="POST" action="'+ response.authorization_information.url +'">'+
+                '<button type=submit>Click Here</button>'+
+                '<input type="hidden" name="PaReq" value="'+ response.authorization_information.data +'" />'+
+                '<input type="hidden" name="TermUrl" value="http://localhost:3000" />'+
+                '<input type="hidden" name="MD" value="'+ response.id +'" />'+
+                '</form>'+
+            '</body></html>';
+            res.end(form);
+            } else if (response.status == 'approved')  {
+                // handle successfully finished payment.
+            }
         }).catch(function (error) {
-            // show errors or print errors to logs here.
-        })
+            // show errors if exist
+            res.end(JSON.stringify(error, null, 2));
+        });
     }
 })
 ```
