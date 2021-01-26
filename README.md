@@ -40,7 +40,7 @@ const Client = Cardinity.client()
 const Payment = Cardinity.payment()
 
 const purchase = new Payment({
-    'amount': 50.00,
+    'amount': '50.00',
     'currency': 'EUR',
     'settle': true,
     'description': 'Payment from NodeJS',
