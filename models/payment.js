@@ -47,10 +47,10 @@ function Payment(vars) {
 	}
 	// validate
 	this.errors = validate(vars, constraints);
-	
+
 	// validate amount using regexp
-	re=/^(\d)+\.(\d)(\d)$/;
-	if (re.exec(vars.amount) == null) {
+	const re=/^\d+.\d{2}$/;
+	if (!re.test(vars.amount)) {
 		this.errors = {field:"amount", message:"Amount should be string 0.00 format"};
 	}
 	if (parseFloat(vars.amount) < 0.5) {
