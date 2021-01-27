@@ -10,17 +10,6 @@ const challengeWindowSizes = [
 const Constraint = class {
 
 	/**
-	 * @return {object} of amount constraints
-	 */
-	get amount() {
-		return {
-			presence: true,
-			type: "number",
-			numericality: { greaterThanOrEqualTo: 0.5 }
-		}
-	}
-
-	/**
 	 * @return {object} of country constraints
 	 */
 	get country() {
