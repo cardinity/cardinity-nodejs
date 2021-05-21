@@ -1,5 +1,5 @@
 const validate = require('validate.js');
-const Constraint = require('constraint');
+const Constraint = require('./constraint.js');
 
 const method = Recurring.prototype;
 
