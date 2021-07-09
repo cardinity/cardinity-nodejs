@@ -174,7 +174,7 @@ const Constraint = class {
 	get notificationUrl() {
 		return {
 			presence: true,
-			url: { allowLocal: true }
+			url: { allowLocal: false }
 		}
 	}
 
