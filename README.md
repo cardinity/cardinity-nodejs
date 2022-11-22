@@ -65,14 +65,14 @@ const purchase = new Payment({
         'holder': 'John Doe',
     },
     'threeds2_data': {
-        'notification_url': 'http://localhost:3000',
+        'notification_url': 'https://www.myonlineshop.com/callback/3dsv2',
         'browser_info': {
-            'accept_header': 'Some header',
-            'browser_language': 'en',
-            'screen_width': 390,
-            'screen_height': 400,
-            'challenge_window_size': '390x400',
-            'user_agent': 'super user agent',
+            'accept_header': 'text/html',
+            'browser_language': 'en-US',
+            'screen_width': 1920,
+            'screen_height': 1040,
+            'challenge_window_size': '500x600',
+            'user_agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:21.0) Gecko/20100101 Firefox/21.0',
             'color_depth': 24,
             'time_zone': -60,
             'ip_address': '192.168.0.1',
@@ -139,7 +139,7 @@ const Client = Cardinity.client()
 const Recurring = Cardinity.recurring()
 
 const recurring = new Recurring({
-    'amount': 50.00,
+    'amount': '50.00',
     'currency': 'EUR',
     'settle': false,
     'description': 'some description',
@@ -185,88 +185,6 @@ if (patch.errors) {
         // Deal with error
     });
 }
-```
-
-#### Finalize pending payment 3D secure V1
-
-```javascript
-const Cardinity = require('cardinity-nodejs')
-const Client = Cardinity.client()
-const Finalize = Cardinity.finalize()
-
-const patch = new Finalize({
-    'authorize_data': 'PARES_RECEIVED_FROM_ACS',
-    'id': 'PENDING_PAYMENT_UUID',
-})
-
-if (patch.errors) {
-    // show errors or print errors to logs here.
-} else {
-    const client = new Client('YOUR_CONSUMER_KEY', 'YOUR_CONSUMER_SECRET')
-    client.call(patch).then(function(response){
-        // Deal with response
-    }).catch(function (error){
-        // Deal with error
-    });
-}
-```
-
-#### Finalize processing 3D secure v2 and in case of missing parameters v1
-This example suppose Express package is used: `const app = express()`:
-```javascript
-app.get('/callback', (req, res) => {
-    /** If a technical error occured during payment finalization, Cardinity will try to perform 3D Secure V1 authorization.
-     * You can either retry 3D Secure V2 flow, or perform 3D Secure V1 flow
-     */
-    if (req.body.PaRes) {
-        // finalize 3dsv1 if `PaRes` parameter is received
-        var finalize_obj = new Finalize({
-        'id': req.body.MD,
-        'authorize_data': req.body.PaRes
-    })
-    } else if (req.body.cres) {
-        // finalize 3dsv1 if `cres` parameter is received
-        var finalize_obj = new Finalize({
-            'id': req.body.threeDSSessionData,
-            'cres': req.body.cres,
-            'threedsv2': true
-        });
-    }
-    if (finalize_obj.errors) {
-        // show errors if exist
-        res.end(JSON.stringify(finalize_obj.errors, null, 2));
-    } else {
-        client.call(finalize_obj).then(function (response) {
-            // if finalize 3D secure v2 failed 'pending' status is returned.
-            if (response.status == 'pending') {
-            // process through 3D secure v1 flow starting with form.
-            form = '<html><head>'+
-            '<title>3-D Secure V1 Example</title>'+
-            '<script type="text/javascript">'+
-                +'function OnLoadEvent(){'+
-                // Make the form post as soon as it has been loaded.
-                +'document.ThreeDForm.submit();'+
-                +'}'+
-            '</script>'+
-            '</head>'+
-            '<body onload="OnLoadEvent();">'+
-                '<form name="ThreeDForm" method="POST" action="'+ response.authorization_information.url +'">'+
-                '<button type=submit>Click Here</button>'+
-                '<input type="hidden" name="PaReq" value="'+ response.authorization_information.data +'" />'+
-                '<input type="hidden" name="TermUrl" value="http://localhost:3000" />'+
-                '<input type="hidden" name="MD" value="'+ response.id +'" />'+
-                '</form>'+
-            '</body></html>';
-            res.end(form);
-            } else if (response.status == 'approved')  {
-                // handle successfully finished payment.
-            }
-        }).catch(function (error) {
-            // show errors if exist
-            res.end(JSON.stringify(error, null, 2));
-        });
-    }
-})
 ```
 
 #### Get existing payment
