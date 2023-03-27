@@ -41,7 +41,7 @@ method.call = async function(body) {
         },
     })
     const request_data = {
-        url: 'https://api.cardinity.com/v1/payments' + (body.trailing || ''),
+        url: 'https://api.cardinity.com/v1' + (body.trailing || ''),
         method: body.method,
     }
     return await requestPromise(

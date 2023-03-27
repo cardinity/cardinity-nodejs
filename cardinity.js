@@ -14,3 +14,6 @@ exports.getVoids = () => require('./models/getvoids.js');
 exports.getRefund = () => require('./models/getrefund.js');
 exports.constraint = () => require('./models/constraint.js');
 exports.getChargeback = () => require('./models/getchargeback.js');
+exports.paymentLink = () => require('./models/paymentLink.js');
+exports.updatePaymentLink = () => require('./models/updatePaymentLink.js');
+exports.getPaymentLink = () => require('./models/getPaymentLink.js');

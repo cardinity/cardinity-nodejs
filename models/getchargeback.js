@@ -9,7 +9,7 @@ const Constraint = require('./constraint.js');
 function GetChargeback(vars) {
     this.method = 'GET';
     if (Number.isInteger(vars) || !vars) {
-        this.trailing = '/chargebacks';
+        this.trailing = '/payments/chargebacks';
         if (vars) {
             this.trailing += '?limit=' + vars;
         }
@@ -20,7 +20,7 @@ function GetChargeback(vars) {
             constraints.chargeback_id = constraint.paymentId;
         }
         this.errors = validate(vars, constraints);
-        this.trailing = '/' + vars.payment_id + '/chargebacks/' + (vars.chargeback_id || '');
+        this.trailing = '/payments/' + vars.payment_id + '/chargebacks/' + (vars.chargeback_id || '');
     }
 }
 
