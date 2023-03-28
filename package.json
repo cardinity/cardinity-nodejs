@@ -1,6 +1,6 @@
 { 
   "name": "cardinity-nodejs",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "Cardinity NodeJS Library",
   "homepage": "https://github.com/cardinity/cardinity-nodejs/blob/master/README.md",
   "license": "MIT",
