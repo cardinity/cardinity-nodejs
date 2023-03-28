@@ -10,6 +10,7 @@ Library includes all the functionality provided by the API. Library was designed
       [Refunds](#refunds)  
       [Settlements](#settlements)  
       [Voids](#voids)             
+      [Chargebacks](#chargebacks)             
  [<b>Having problems? →</b>](#having-problems)<br>
  [<b>About us →</b>](#-aboutus)<br>     
 <a name="headers"/>  
@@ -405,6 +406,74 @@ client.call(voids).then(function(response){
 }).catch(function (error){
     // Deal with error
 });
+```
+
+### Chargebacks
+
+#### Get chargebacks of a payment
+
+```javascript
+const Cardinity = require('cardinity-nodejs')
+const GetChargeback = Cardinity.getChargeback()
+
+const getChargeback = new GetChargeback({
+    'payment_id': 'PAYMENT_UUID'
+})
+
+if (getChargeback.errors) {
+    // Deal with validation errors
+} else {
+    const client = new Client('YOUR_CONSUMER_KEY', 'YOUR_CONSUMER_SECRET')
+    client.call(getChargeback).then(function(response){
+        // Deal with response
+    }).catch(function (error){
+        // Deal with error
+    });
+}
+```
+
+#### Get specific chargeback of a payment
+
+```javascript
+const Cardinity = require('cardinity-nodejs')
+const GetChargeback = Cardinity.getChargeback()
+
+const getChargeback = new GetChargeback({
+    'payment_id': 'PAYMENT_UUID',
+    'chargeback_id': 'CHARGEBACK_UUID'
+})
+
+if (getChargeback.errors) {
+    // Deal with validation errors
+} else {
+    const client = new Client('YOUR_CONSUMER_KEY', 'YOUR_CONSUMER_SECRET')
+    client.call(getChargeback).then(function(response){
+        // Deal with response
+    }).catch(function (error){
+        // Deal with error
+    });
+}
+```
+
+#### Get all chargebacks
+
+```javascript
+const Cardinity = require('cardinity-nodejs')
+const GetChargeback = Cardinity.getChargeback()
+
+const limit = 10
+const getChargeback = new GetChargeback(limit)
+
+if (getChargeback.errors) {
+    // Deal with validation errors
+} else {
+    const client = new Client('YOUR_CONSUMER_KEY', 'YOUR_CONSUMER_SECRET')
+    client.call(getChargeback).then(function (response) {
+        // Deal with response
+    }).catch(function (error) {
+        // Deal with error
+    });
+}
 ```
 
 ### Having problems?  
