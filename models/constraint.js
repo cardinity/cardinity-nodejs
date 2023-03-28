@@ -10,6 +10,32 @@ const challengeWindowSizes = [
 const Constraint = class {
 
 	/**
+	 * @return {function} for amount constraints
+	 */
+    get amount() {
+		return function(value) {
+			const pattern = /^\d+.\d{2}$/;
+			if (pattern.test(value)) {
+				return {
+					presence: true,
+					numericality: {
+						greaterThanOrEqualTo: 0.5,
+						message: "should be more than 0.5"
+					}
+				};
+			} else {
+				return {
+					presence: true,
+					format: {
+						pattern: pattern,
+						message: "should be string 0.00 format"
+					}
+				}
+			}
+		}
+	}
+
+	/**
 	 * @return {object} of country constraints
 	 */
 	get country() {
@@ -340,6 +366,49 @@ const Constraint = class {
 			type: "string"
 		}
 	}
+
+	/**
+	 * @return {object} boolean constraint
+	 */
+	get boolean() {
+		return {
+			type: "boolean"
+		}
+	}
+
+	/**
+	 * @return {object} wrapper for payment link constraints
+	 */
+    get paymentLink() {
+        return {
+            /**
+             * @return {object} payment link expiration date constraints
+             */
+            expirationDate: {
+                type: "date"
+            },
+            /**
+             * @return {object} payment link description constraints
+             */
+            description: {
+				presence: true,
+                type: "string",
+				length: {
+					minimum: 1,
+					maximum: 255
+				}
+            },
+			/**
+			 * @return {object} payment link country constraints
+			 */
+			get country() {
+				return {
+					type: "string",
+					length: { is: 2 }
+				}
+			}
+        }
+    }
 }
 
 module.exports = Constraint;

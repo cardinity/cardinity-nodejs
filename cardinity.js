@@ -13,3 +13,7 @@ exports.getSettlement = () => require('./models/getsettlement.js');
 exports.getVoids = () => require('./models/getvoids.js');
 exports.getRefund = () => require('./models/getrefund.js');
 exports.constraint = () => require('./models/constraint.js');
+exports.getChargeback = () => require('./models/getchargeback.js');
+exports.paymentLink = () => require('./models/paymentlink.js');
+exports.updatePaymentLink = () => require('./models/updatepaymentlink.js');
+exports.getPaymentLink = () => require('./models/getpaymentlink.js');

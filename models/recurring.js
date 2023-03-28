@@ -20,6 +20,7 @@ function Recurring(vars) {
     this.errors = validate(vars, constraints);
     
     this.method = 'POST';
+    this.trailing = '/payments';
     this.amount = vars.amount;
     this.currency = vars.currency;
     this.settle = vars.settle;

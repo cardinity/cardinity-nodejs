@@ -10,6 +10,7 @@ const method = Payment.prototype;
 function Payment(vars) {
 	let constraint = new Constraint;
 	let constraints = {
+		amount: constraint.amount,
 		country: constraint.country,
 		currency: constraint.currency,
 		description: constraint.description,
@@ -48,16 +49,8 @@ function Payment(vars) {
 	// validate
 	this.errors = validate(vars, constraints);
 
-	// validate amount using regexp
-	const re=/^\d+.\d{2}$/;
-	if (!re.test(vars.amount)) {
-		this.errors = {field:"amount", message:"Amount should be string 0.00 format"};
-	}
-	if (parseFloat(vars.amount) < 0.5) {
-		this.errors = {field:"amount", message:"Amount should be more than 0.5"};
-	}
-
 	this.method = 'POST';
+	this.trailing = '/payments'
 	this.amount = vars.amount;
 	this.country = vars.country;
 	this.currency = vars.currency;
