@@ -10,6 +10,8 @@ Library includes all the functionality provided by the API. Library was designed
       [Refunds](#refunds)  
       [Settlements](#settlements)  
       [Voids](#voids)             
+      [Chargebacks](#chargebacks)             
+      [Payment Links](#payment-links)             
  [<b>Having problems? →</b>](#having-problems)<br>
  [<b>About us →</b>](#-aboutus)<br>     
 <a name="headers"/>  
@@ -405,6 +407,151 @@ client.call(voids).then(function(response){
 }).catch(function (error){
     // Deal with error
 });
+```
+
+### Chargebacks
+
+#### Get chargebacks of a payment
+
+```javascript
+const Cardinity = require('cardinity-nodejs')
+const GetChargeback = Cardinity.getChargeback()
+
+const getChargeback = new GetChargeback({
+    'payment_id': 'PAYMENT_UUID'
+})
+
+if (getChargeback.errors) {
+    // Deal with validation errors
+} else {
+    const client = new Client('YOUR_CONSUMER_KEY', 'YOUR_CONSUMER_SECRET')
+    client.call(getChargeback).then(function(response){
+        // Deal with response
+    }).catch(function (error){
+        // Deal with error
+    });
+}
+```
+
+#### Get specific chargeback of a payment
+
+```javascript
+const Cardinity = require('cardinity-nodejs')
+const GetChargeback = Cardinity.getChargeback()
+
+const getChargeback = new GetChargeback({
+    'payment_id': 'PAYMENT_UUID',
+    'chargeback_id': 'CHARGEBACK_UUID'
+})
+
+if (getChargeback.errors) {
+    // Deal with validation errors
+} else {
+    const client = new Client('YOUR_CONSUMER_KEY', 'YOUR_CONSUMER_SECRET')
+    client.call(getChargeback).then(function(response){
+        // Deal with response
+    }).catch(function (error){
+        // Deal with error
+    });
+}
+```
+
+#### Get all chargebacks
+
+```javascript
+const Cardinity = require('cardinity-nodejs')
+const GetChargeback = Cardinity.getChargeback()
+
+const limit = 10
+const getChargeback = new GetChargeback(limit)
+
+if (getChargeback.errors) {
+    // Deal with validation errors
+} else {
+    const client = new Client('YOUR_CONSUMER_KEY', 'YOUR_CONSUMER_SECRET')
+    client.call(getChargeback).then(function (response) {
+        // Deal with response
+    }).catch(function (error) {
+        // Deal with error
+    });
+}
+```
+
+### Payment Links
+
+#### Create new payment link
+
+```javascript
+const Cardinity = require('cardinity-nodejs')
+const PaymentLink = Cardinity.paymentLink()
+
+const now = new Date()
+const paymentLink = new PaymentLink({
+    'amount': '50.00',
+    'currency': 'EUR',
+    'description': 'PAYMENT_LINK_DESCRIPTION',
+    'country': 'LT',
+    'expiration_date': new Date(now.setDate(now.getDate() + 7)),//Expires 1 week from now
+    'multiple_use': true
+})
+
+if (paymentLink.errors) {
+    // Deal with validation errors
+} else {
+    const client = new Client('YOUR_CONSUMER_KEY', 'YOUR_CONSUMER_SECRET')
+    client.call(paymentLink).then(function(response){   
+        // Deal with response
+    }).catch(function (error){
+        // Deal with error
+    });
+}
+```
+
+#### Update existing payment link
+
+```javascript
+const Cardinity = require('cardinity-nodejs')
+const UpdatePaymentLink = Cardinity.updatePaymentLink()
+
+const now = new Date()
+const updatePaymentLink = new UpdatePaymentLink({
+    'id': 'PAYMENT_LINK_UUID',
+    'expiration_date': new Date(now.setDate(now.getDate() + 7)),//Expires 1 week from now
+    'enabled': true
+})
+
+if (updatePaymentLink.errors) {
+    // Deal with validation errors
+} else {
+    const client = new Client('YOUR_CONSUMER_KEY', 'YOUR_CONSUMER_SECRET')
+    client.call(updatePaymentLink).then(function(response){
+        // Deal with response
+    }).catch(function (error){
+        // Deal with error
+    });
+}
+```
+
+#### Get existing payment link
+
+```javascript
+const Cardinity = require('cardinity-nodejs')
+const GetPaymentLink = Cardinity.getPaymentLink()
+
+const getPaymentLink = new GetPaymentLink({
+    'id': 'PAYMENT_LINK_UUID'
+})
+
+if (getPaymentLink.errors) {
+    // Deal with validation errors
+} else {
+    const client = new Client('YOUR_CONSUMER_KEY', 'YOUR_CONSUMER_SECRET')
+    client.call(getPaymentLink).then(function(response){
+        // Deal with response
+    }).catch(function (error){
+        // Deal with error
+    });
+}
 ```
 
 ### Having problems?  
